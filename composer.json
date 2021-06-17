@@ -39,7 +39,7 @@
         ],
 	"files": [ 
             "src/Foundation/functions.php"
-        ]
+        ],
         "psr-4": {    
             "Symfox\\" : "vendor/symfox/framework/src",
             "Symfony\\" : "vendor/symfony"
