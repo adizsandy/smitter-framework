@@ -3,9 +3,10 @@
     "description": "The Components behind Symfox",
     "keywords": ["framework", "symfox"],
     "license": "MIT",
-    "type": "project",
+    "type": "library",
     "require": {
-        "doctrine/cache": "^1.8", 
+        "doctrine/cache": "^1.8",
+        "dompdf/dompdf": "^1.0",
         "falc/flysystem-local-symlink-plugin": "^1.2",
         "illuminate/database": "^6.20.26",
         "illuminate/support": "^6.0",
