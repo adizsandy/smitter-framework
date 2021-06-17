@@ -1,0 +1,55 @@
+{
+    "name": "symfox/core",
+    "description": "The Components behind Symfox",
+    "keywords": ["framework", "symfox"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "doctrine/cache": "^1.8", 
+        "falc/flysystem-local-symlink-plugin": "^1.2",
+        "illuminate/database": "^6.20.26",
+        "illuminate/support": "^6.0",
+        "league/flysystem": "^1.0",
+        "nesbot/carbon": "^2.34",
+        "php-di/php-di": "^6.3",
+        "swiftmailer/swiftmailer": "^6.2",
+        "symfony/cache": "^5.0",
+        "symfony/console": "^5.3",
+        "symfony/dotenv": "^5.2",
+        "symfony/event-dispatcher": "^5.2",
+        "symfony/http-foundation": "^5.2",
+        "symfony/http-kernel": "^5.2",
+        "symfony/password-hasher": "5.4.x-dev",
+        "symfony/routing": "^5.2",
+        "symfony/security-csrf": "^5.2.10"
+    },
+    "autoload": {
+        "classmap": [
+           
+        ],
+        "psr-4": {
+            "App\\" : "app",    
+            "Symfox\\" : "vendor/symfox/core/src",
+            "Symfony\\" : "vendor/symfony"
+        }, 
+        "files": [ 
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            
+        }
+    },
+    "extra": {
+        
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
+
+}
