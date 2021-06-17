@@ -41,8 +41,7 @@
             "src/Foundation/functions.php"
         ],
         "psr-4": {    
-            "Symfox\\" : "src/",
-            "Boot\\" : "boot/"
+            "Symfox\\" : "src/" 
         }
     },
     "autoload-dev": {
