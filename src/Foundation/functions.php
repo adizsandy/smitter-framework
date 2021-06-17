@@ -4,7 +4,6 @@
  * Collection of Service Factory Functions
  * Public API
  */
-
 function container() 
 {
     global $app;
