@@ -2,7 +2,6 @@
 
 namespace Symfox\Persistance;
 
-use Boot\Env\Configurator;
 use Illuminate\Database\Capsule\Manager as Capsule; 
 
 class Persistance {

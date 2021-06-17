@@ -2,30 +2,21 @@
 
 namespace Symfox\Dispatch;
 
+use DI\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher; 
 
 class Dispatch extends EventDispatcher {
 
-	//private $dispatcher;
 	private $events = [];
 	private $listeners = [];
+	private $container;
 
-	public function __construct()
+	public function __construct(Container $container)
 	{	
-		//$this->setDispatcher();
+		$this->container = $container;
 		$this->setEvents();
-		$this->setListeners();
+		$this->setListeners(); 
 	}
-
-	// public function getDispatcher() 
-	// {
-	// 	return $this->dispatcher;
-	// }
-
-	// protected function setDispatcher() 
-	// {
-	// 	$this->dispatcher = new EventDispatcher(); 
-	// }
 
 	public function getEvents() 
 	{
@@ -35,7 +26,7 @@ class Dispatch extends EventDispatcher {
 
 	protected function setEvents() 
 	{
-		$this->events = container()->get('collection.event'); 
+		$this->events = $this->container->get('collection.event'); 
 	}
 
 	public function getListenerList($event_key) 
@@ -46,7 +37,7 @@ class Dispatch extends EventDispatcher {
 
 	protected function setListeners() 
 	{
-		$this->listeners = container()->get('collection.listener'); ;
+		$this->listeners = $this->container->get('collection.listener'); ;
 	}
 
 	public function resolve($request, $response)

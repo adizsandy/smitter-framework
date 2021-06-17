@@ -16,24 +16,17 @@ class Application {
 
     private $container; 
 
-    private $abstract_bindings = [];
+    //private $abstract_bindings = [];
 
-    private $key_bindings = [];
+    //private $key_bindings = [];
 
     public function __construct($basepath = null)
     {   
         // Set root path of project
         $this->setBasePath($basepath); 
 
-        // Register core service bindings
-        // Abstract and Key Bindings
-        $this->registerCoreServiceBindings();
-
         // Setup container
         $this->setupContainer();
-
-        // Set key bindings with container
-        $this->setKeyBindings();
 
         // Set path bindings with container
         $this->setPathBindings();
@@ -43,6 +36,13 @@ class Application {
 
         // Set collection bindings with container
         $this->setCollectionBindings();
+
+        // Register core service bindings
+        // Abstract and Key Bindings
+        $this->registerCoreServiceBindings();
+
+        // Set key bindings with container
+        //$this->setKeyBindings();
     }
 
     private function setBasePath($basepath) 
@@ -148,18 +148,18 @@ class Application {
     private function setupContainer() 
     {
         $containerBuilder = new ContainerBuilder; 
-        $containerBuilder->addDefinitions($this->abstract_bindings);
+        //$containerBuilder->addDefinitions($this->abstract_bindings);
         $this->container = $containerBuilder->build();
     }
 
-    protected function setKeyBindings() 
-    {
-        if ( count($this->key_bindings) > 0 ) {
-            foreach ( $this->key_bindings as $key => $instance ) {
-                $this->container->set($key, $instance);
-            }
-        } 
-    }
+    // protected function setKeyBindings() 
+    // {
+    //     if ( count($this->key_bindings) > 0 ) {
+    //         foreach ( $this->key_bindings as $key => $instance ) {
+    //             $this->container->set($key, $instance);
+    //         }
+    //     } 
+    // }
 
     protected function setPathBindings() 
     {
@@ -190,106 +190,45 @@ class Application {
     protected function registerCoreServiceBindings() 
     {   
         $services = ( require $this->basepath . DIRECTORY_SEPARATOR . 'config/app.php' ) ['services'];
-        
-        if ( empty($services) || count($services) == 0 ) { 
-            $services = [
-                // Default services 
-                'request' => [ 
-                    'abstract' => Symfox\Request\RequestInterface::class,
-                    'concrete' => \Symfox\Request\RequestAction::class, 
-                ],  
-                'response' => [ 
-                    'abstract' => \Symfox\Response\ResponseInterface::class,
-                    'concrete' => \Symfox\Response\ResponseAction::class, 
-                ],
-                'filehandler' => [ 
-                    'abstract' => \Symfox\Filehandler\FilehandlerInterface::class,
-                    'concrete' => \Symfox\Filehandler\Filehandler::class 
-                ], 
-                'mailer' => [ 
-                    'abstract' => \Symfox\Mail\MailerInterface::class,
-                    'concrete' => \Symfox\Mail\Mailer::class 
-                ], 
-                'db' => [ 
-                    'abstract' => \Symfox\Persistance\PersistanceFactoryInterface::class,
-                    'concrete' => \Symfox\Persistance\PersistanceFactory::class
-                ], 
-                'session' => [ 
-                    'abstract' => Symfony\Component\HttpFoundation\Session\SessionInterface::class,
-                    'concrete' => Symfony\Component\HttpFoundation\Session\Session::class 
-                ], 
-                'hasher' => [ 
-                    'abstract' => Symfox\Security\PasswordHasherFactoryInterface::class,
-                    'concrete' => Symfox\Security\PasswordHasherFactory::class
-                ],
-                'csrf' => [ 
-                    'abstract' => Symfony\Component\Security\Csrf\CsrfTokenManagerInterface::class,
-                    'concrete' => Symfony\Component\Security\Csrf\CsrfTokenManager::class
-                ],
-                'auth' => [ 
-                    'abstract' => \Symfox\Security\AuthInterface::class,
-                    'concrete' => \Symfox\Security\Auth::class 
-                ],  
-                'viewcache' => [ 
-                    'abstract' => \Symfox\View\ViewInterface::class,
-                    'concrete' => \Symfox\View\ViewCache::class 
-                ], 
-                'view' => [ 
-                    'concrete' => \Symfox\View\View::class 
-                ],    
-                'matcher' => [ 
-                    'abstract' => \Symfox\Match\MatchFactoryInterface::class,
-                    'concrete' => \Symfox\Match\MatchFactory::class 
-                ],   
-                'dispatcher' => [ 
-                    'abstract' => Symfony\Component\EventDispatcher\EventDispatcherInterface::class,
-                    'concrete' => \Symfox\Dispatch\Dispatch::class 
-                ],
-                'control' => [ 
-                    'abstract' => Symfony\Component\HttpKernel\Controller\ControllerResolverInterface::class,
-                    'concrete' => Symfony\Component\HttpKernel\Controller\ControllerResolver::class 
-                ],
-                'kernel' => [  
-                    'concrete' => Boot\Kernel::class 
-                ]
-            ];
-        }
 
         foreach ( $services as $key => $definition ) {
-            
-            // Get Resolved Instance 
-            $instance = $this->resolveArgumentsInjection($definition['concrete']);
 
-            // Abstract Assignment to Implementation if applicable
-            if (isset($definition['abstract']) && !empty($definition['abstract'])) { 
-                $this->abstract_bindings[$definition['abstract']] = $instance; 
+            // Refreh container instance over container
+            $this->container->set('DI\Container', $this->container);
+        
+            $ref = new ReflectionClass($definition['concrete']);
+            $constructor = $ref->getConstructor();
+            $args = $constructor->getParameters();
+
+            // List filtered arguments from constructor
+            $filtered_args = []; 
+            if (count($args) > 0) { 
+                foreach ($args as $a) {
+                    if (empty($a->getType())) {
+                        $filtered_args[] = $a->getDefaultValue();
+                    } else {
+                        $name = $a->getType()->getName(); 
+                        if ( $this->container->has($name) ) { 
+                            $filtered_args[] = $this->container->get($name);
+                        } else {
+                            $filtered_args[] = $a->getDefaultValue();
+                        }
+                    } 
+                }
+            }
+            
+            // Create instance from given arguments
+            $instance = $ref->newInstanceArgs($filtered_args);
+
+            // Set Namespace Bindings for Services
+            // OPTIONAL: If abstract definitions are provided
+            if (isset($definition['abstract']) && !empty($definition['abstract'])) {  
+                $this->container->set($definition['abstract'], $instance);
             } 
 
             // Set Key Bindings for Services
-            $this->key_bindings[$key] = $instance;   
+            $this->container->set($key, $instance);   
         }
-         
-    }
-
-    protected function resolveArgumentsInjection($class) 
-    {
-        $ref = new ReflectionClass($class);
-        $constructor = $ref->getConstructor();
-        $args = $constructor->getParameters();
-        $mod_args = [];
-        if (count($args) > 0) {
-            foreach ($args as $a) {
-                if (!empty($a->getType())) {
-                    $name = $a->getType()->getName();
-                    if (array_key_exists($name, $this->abstract_bindings)){
-                        $mod_args[] = $this->abstract_bindings[$name];
-                    }
-                } else {
-                    $mod_args[] = $a->getDefaultValue();
-                }
-            }
-        }
-        return $ref->newInstanceArgs($mod_args);
     }
 
     public function make() 

@@ -52,3 +52,11 @@
 /.web-server-pid
 
 /tests/
+
+/config/
+
+.env
+
+/app/
+
+/boot/

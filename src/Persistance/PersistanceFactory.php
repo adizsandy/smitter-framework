@@ -2,17 +2,22 @@
 
 namespace Symfox\Persistance;
 
+use DI\Container;
 use Symfox\Persistance\Persistance;
 use Symfox\Persistance\PersistanceFactoryInterface;
 
 class PersistanceFactory implements PersistanceFactoryInterface {
 
     private $connection;
+    private $container;
 
-    public function __construct(string $connection = 'default')
+    public function __construct($connection = 'default', Container $container)
     {
+        $this->container = $container;
+
         // Set Connection
         $this->setConnection($connection);
+
     }
 
     public function getPersistance() 
@@ -28,6 +33,6 @@ class PersistanceFactory implements PersistanceFactoryInterface {
 
     protected function setConnection($connection = 'default') 
     {
-        $this->connection = container()->get('config.connection_detail');
+        $this->connection = $this->container->get('config.connection_detail');
     } 
 }

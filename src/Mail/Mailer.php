@@ -2,14 +2,16 @@
 
 namespace Symfox\Mail;
 
+use DI\Container;
+
 class Mailer extends \Swift_Mailer implements MailerInterface {
 
     private $transport;
     private $composer; 
     
-    public function __construct() 
+    public function __construct(Container $container) 
     {    
-        $this->setTransport(container()->get('collection.mail'));
+        $this->setTransport($container->get('collection.mail'));
         parent::__construct($this->transport);
     }
 
