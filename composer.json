@@ -33,6 +33,7 @@
             "Symfony\\" : "vendor/symfony"
         }, 
         "files": [ 
+            "src/Foundation/functions.php"
         ]
     },
     "autoload-dev": {
