@@ -1,5 +1,5 @@
 {
-    "name": "symfox/core",
+    "name": "symfox/framework",
     "description": "The Components behind Symfox",
     "keywords": ["framework", "symfox"],
     "license": "MIT",
