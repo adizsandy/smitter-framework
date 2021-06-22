@@ -16,10 +16,6 @@ class Application {
 
     private $container; 
 
-    //private $abstract_bindings = [];
-
-    //private $key_bindings = [];
-
     public function __construct($basepath = null)
     {   
         // Set root path of project
@@ -41,8 +37,6 @@ class Application {
         // Abstract and Key Bindings
         $this->registerCoreServiceBindings();
 
-        // Set key bindings with container
-        //$this->setKeyBindings();
     }
 
     private function setBasePath($basepath) 
@@ -52,7 +46,7 @@ class Application {
 
     public function modulePath() 
     {
-        return $this->basepath . DIRECTORY_SEPARATOR . 'app/modules/';
+        return $this->basepath . DIRECTORY_SEPARATOR . 'app/';
     }
 
     public function cachePath() 
@@ -84,7 +78,7 @@ class Application {
 
     public function moduleCollection() 
     {
-        return require $this->basepath . DIRECTORY_SEPARATOR . 'app/modules/register.php';
+        return require $this->basepath . DIRECTORY_SEPARATOR . 'app/register.php';
     }
 
     public function eventCollection() 
@@ -125,7 +119,7 @@ class Application {
                             $final_url_path = '/'.rtrim(ltrim($declarations['url_prefix'].ltrim($detail[0], '/'), '/'), '/');
                             
                             // Prepare prefixed controller
-                            $final_controller = str_replace("/", "\\", "App/Module/". $module_dir . '/Controller/');
+                            $final_controller = str_replace("/", "\\", "App/". $module_dir . '/Controller/');
                             
                             // add to collection
                             $route_collection[ $module_prefix . '_' . $route_name ] = [ $final_url_path, $final_controller . $detail[1] ];
@@ -147,19 +141,10 @@ class Application {
 
     private function setupContainer() 
     {
-        $containerBuilder = new ContainerBuilder; 
-        //$containerBuilder->addDefinitions($this->abstract_bindings);
+        $containerBuilder = new ContainerBuilder;  
         $this->container = $containerBuilder->build();
     }
 
-    // protected function setKeyBindings() 
-    // {
-    //     if ( count($this->key_bindings) > 0 ) {
-    //         foreach ( $this->key_bindings as $key => $instance ) {
-    //             $this->container->set($key, $instance);
-    //         }
-    //     } 
-    // }
 
     protected function setPathBindings() 
     {
@@ -190,7 +175,7 @@ class Application {
     protected function registerCoreServiceBindings() 
     {   
         $services = ( require $this->basepath . DIRECTORY_SEPARATOR . 'config/app.php' ) ['services'];
-
+        
         foreach ( $services as $key => $definition ) {
 
             // Refreh container instance over container

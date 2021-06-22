@@ -5,7 +5,7 @@ namespace Symfox\View;
 use Symfony\Component\HttpFoundation\Session\SessionInterface; 
 use Symfox\Request\RequestInterface; 
 use Symfox\Response\ResponseInterface;
-use Symfox\Security\AuthInterface;
+use Symfox\Auth\BaseAuthInterface as AuthInterface;
 use Symfox\View\ViewInterface;
 
 class View {
@@ -16,12 +16,10 @@ class View {
 	private $response; 
 	private $viewcache;
 	private $request;
-	public $auth;
 	public $session; 
 
-	public function __construct( AuthInterface $auth, SessionInterface $session, RequestInterface $request,  ViewInterface $viewcache, ResponseInterface $response )
+	public function __construct(SessionInterface $session, RequestInterface $request,  ViewInterface $viewcache, ResponseInterface $response )
 	{ 	
-		$this->auth = $auth;
 		$this->session = $session; 
 		$this->response = $response; 
 		$this->viewcache = $viewcache; 
