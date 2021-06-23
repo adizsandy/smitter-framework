@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Request;
+namespace Smitter\Request;
 
 use Symfony\Component\HttpFoundation\Request;
 

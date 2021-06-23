@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Request;
+namespace Smitter\Request;
 
 interface RequestInterface {
 

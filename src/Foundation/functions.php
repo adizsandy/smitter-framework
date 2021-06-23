@@ -57,6 +57,6 @@ function request()
 
 function csrf_token($name = null) 
 {   
-    $name = empty($name) ? 'symfox' : $name;
+    $name = empty($name) ? 'Smitter' : $name;
     return auth()->csrf()->getToken($name)->__toString();
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Session;
+namespace Smitter\Session;
 
 //use Symfony\Component\HttpFoundation\Session\Session as Parent_Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

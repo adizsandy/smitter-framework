@@ -1,9 +1,9 @@
 <?php
 
-namespace Symfox\View;
+namespace Smitter\View;
 
-use Symfox\Cache\Cache;
-use Symfox\Request\RequestInterface;
+use Smitter\Cache\Cache;
+use Smitter\Request\RequestInterface;
 
 class ViewCache implements ViewInterface {
  

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Match;
+namespace Smitter\Match;
 
 interface MatchFactoryInterface {
     

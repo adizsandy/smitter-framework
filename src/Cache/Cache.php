@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Cache;
+namespace Smitter\Cache;
 
 class Cache {
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace Symfox\View;
+namespace Smitter\View;
 
 use Symfony\Component\HttpFoundation\Session\SessionInterface; 
-use Symfox\Request\RequestInterface; 
-use Symfox\Response\ResponseInterface;
-use Symfox\Auth\BaseAuthInterface as AuthInterface;
-use Symfox\View\ViewInterface;
+use Smitter\Request\RequestInterface; 
+use Smitter\Response\ResponseInterface;
+use Smitter\Auth\BaseAuthInterface as AuthInterface;
+use Smitter\View\ViewInterface;
 
 class View {
 

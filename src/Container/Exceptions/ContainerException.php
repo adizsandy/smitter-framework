@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Container\Exceptions;
+namespace Smitter\Container\Exceptions;
 
 use Psr\Container\ContainerExceptionInterface;
 use Exception;

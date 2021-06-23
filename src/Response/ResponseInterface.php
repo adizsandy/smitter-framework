@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Response;
+namespace Smitter\Response;
 
 interface ResponseInterface {
     

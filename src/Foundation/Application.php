@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Foundation;
+namespace Smitter\Foundation;
 
 use DI\ContainerBuilder;
 use ReflectionClass;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Response;
+namespace Smitter\Response;
 
 use Dompdf\Dompdf;
 use Symfony\Component\HttpFoundation\Response;

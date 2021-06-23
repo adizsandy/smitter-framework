@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\View;
+namespace Smitter\View;
 
 interface ViewInterface {
     

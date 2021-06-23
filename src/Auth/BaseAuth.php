@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Auth;
+namespace Smitter\Auth;
 
 class BaseAuth implements BaseAuthInterface {
 

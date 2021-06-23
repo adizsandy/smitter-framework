@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Filehandler;
+namespace Smitter\Filehandler;
 
 interface FilehandlerInterface {
     

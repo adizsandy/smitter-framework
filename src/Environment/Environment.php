@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Environment;
+namespace Smitter\Environment;
 
 final class Environment {
 

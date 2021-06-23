@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Filehandler;
+namespace Smitter\Filehandler;
 
 use DI\Container;
 use League\Flysystem\Filesystem;

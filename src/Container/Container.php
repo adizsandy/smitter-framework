@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Container;
+namespace Smitter\Container;
 
 use DI\Container as DI_Container;  
 

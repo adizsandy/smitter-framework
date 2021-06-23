@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Dispatch;
+namespace Smitter\Dispatch;
 
 use DI\Container;
 use Symfony\Component\EventDispatcher\EventDispatcher; 

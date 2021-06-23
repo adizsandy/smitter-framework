@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Persistance;
+namespace Smitter\Persistance;
 
 interface PersistanceFactoryInterface 
 {

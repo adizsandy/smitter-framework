@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Persistance;
+namespace Smitter\Persistance;
 
 use Illuminate\Database\Capsule\Manager as Capsule; 
 

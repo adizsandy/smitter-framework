@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Mail;
+namespace Smitter\Mail;
 
 use DI\Container;
 

@@ -1,11 +1,11 @@
 {
-    "name": "symfox/framework",
-    "description": "The Components behind Symfox",
-    "keywords": ["framework", "symfox"],
+    "name": "smitter/framework",
+    "description": "The Components behind Smitter",
+    "keywords": ["framework", "smitter"],
     "license": "MIT",  
     "support": {
-        "issues": "https://github.com/adizsandy/symfox-framework/issues",
-        "source": "https://github.com/adizsandy/symfox-framework"
+        "issues": "https://github.com/adizsandy/smitter-framework/issues",
+        "source": "https://github.com/adizsandy/smitter-framework"
     },
     "authors": [
         {
@@ -41,7 +41,7 @@
             "src/Foundation/functions.php"
         ],
         "psr-4": {    
-            "Symfox\\" : "src/" 
+            "Smitter\\" : "src/" 
         }
     },
     "autoload-dev": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Match;
+namespace Smitter\Match;
 
 use DI\Container;
 use Symfony\Component\Routing\RouteCollection;

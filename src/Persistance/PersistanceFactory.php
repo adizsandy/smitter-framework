@@ -1,10 +1,10 @@
 <?php
 
-namespace Symfox\Persistance;
+namespace Smitter\Persistance;
 
 use DI\Container;
-use Symfox\Persistance\Persistance;
-use Symfox\Persistance\PersistanceFactoryInterface;
+use Smitter\Persistance\Persistance;
+use Smitter\Persistance\PersistanceFactoryInterface;
 
 class PersistanceFactory implements PersistanceFactoryInterface {
 

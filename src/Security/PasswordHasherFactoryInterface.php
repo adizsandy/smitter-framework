@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Security;
+namespace Smitter\Security;
 
 interface PasswordHasherFactoryInterface {
     

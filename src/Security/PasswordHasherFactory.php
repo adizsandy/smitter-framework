@@ -1,6 +1,6 @@
 <?php
 
-namespace Symfox\Security;
+namespace Smitter\Security;
 
 use DI\Container;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory as ParentHasher;

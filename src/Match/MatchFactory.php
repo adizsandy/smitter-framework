@@ -1,9 +1,9 @@
 <?php
 
-namespace Symfox\Match;
+namespace Smitter\Match;
 
 use DI\Container;
-use Symfox\Match\RouteRegistry; 
+use Smitter\Match\RouteRegistry; 
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 
