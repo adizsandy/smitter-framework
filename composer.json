@@ -19,7 +19,7 @@
         "falc/flysystem-local-symlink-plugin": "^1.2",
         "illuminate/database": "^6.20.26",
         "illuminate/support": "^6.0",
-        "league/flysystem": "^1.0",
+        "league/flysystem": "1.1.4",
         "nesbot/carbon": "^2.34",
         "php-di/php-di": "^6.3",
         "swiftmailer/swiftmailer": "^6.2",
