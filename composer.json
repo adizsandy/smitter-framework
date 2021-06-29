@@ -41,7 +41,8 @@
             "src/Foundation/functions.php"
         ],
         "psr-4": {    
-            "Smitter\\" : "src/" 
+            "Smitter\\" : "src/" ,
+            "Boot\\" : "boot/"
         }
     },
     "autoload-dev": {

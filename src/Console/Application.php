@@ -1,22 +1,18 @@
 <?php
 
-namespace Smitter\Foundation;
+namespace Smitter\Console;
 
 use DI\ContainerBuilder;
-use ReflectionClass;
+use ReflectionClass; 
+use Symfony\Component\Console\Application as BaseApplication;
 
-/**
- * Application/Service Container
- */
-class Application {
+class Application extends BaseApplication {
 
     private $basepath;
 
-    private $route_attributes;
-
     private $container; 
 
-    public function __construct($basepath = null)
+    public function __construct($basepath)
     {   
         // Set root path of project
         $this->setBasePath($basepath); 
@@ -37,11 +33,16 @@ class Application {
         // Abstract and Key Bindings
         $this->registerCoreServiceBindings();
 
+        // Register core service bindings
+        // Abstract and Key Bindings
+        $this->registerConsoleServiceBindings();
+
+        parent::__construct();
     }
 
     private function setBasePath($basepath) 
     {
-        $this->basepath = dirname( $basepath . '/../');
+        $this->basepath = $basepath;
     }
 
     public function modulePath() 
@@ -84,6 +85,16 @@ class Application {
     public function moduleCollection() 
     {
         return require $this->basepath . DIRECTORY_SEPARATOR . 'app/register.php';
+    }
+
+    public function commandCollection() 
+    {
+        return ( require $this->basepath . DIRECTORY_SEPARATOR . 'config/console.php' ) ['commands'];
+    }
+
+    public function serviceCollection() 
+    {
+        return ( require $this->basepath . DIRECTORY_SEPARATOR . 'config/app.php' ) ['services']; 
     }
 
     public function eventCollection() 
@@ -150,7 +161,6 @@ class Application {
         $this->container = $containerBuilder->build();
     }
 
-
     protected function setPathBindings() 
     {
         $this->container->set('path.module', $this->modulePath());
@@ -180,50 +190,61 @@ class Application {
 
     protected function registerCoreServiceBindings() 
     {   
-        $services = ( require $this->basepath . DIRECTORY_SEPARATOR . 'config/app.php' ) ['services'];
-        
+        $services = $this->serviceCollection(); 
         foreach ( $services as $key => $definition ) {
-
-            // Refreh container instance over container
-            $this->container->set('DI\Container', $this->container);
-        
-            $ref = new ReflectionClass($definition['concrete']);
-            $constructor = $ref->getConstructor();
-            $args = $constructor->getParameters();
-
-            // List filtered arguments from constructor
-            $filtered_args = []; 
-            if (count($args) > 0) { 
-                foreach ($args as $a) {
-                    if (empty($a->getType())) {
-                        $filtered_args[] = $a->getDefaultValue();
-                    } else {
-                        $name = $a->getType()->getName(); 
-                        if ( $this->container->has($name) ) { 
-                            $filtered_args[] = $this->container->get($name);
-                        } else {
-                            $filtered_args[] = $a->getDefaultValue();
-                        }
-                    } 
-                }
-            }
-            
-            // Create instance from given arguments
-            $instance = $ref->newInstanceArgs($filtered_args);
-
-            // Set Namespace Bindings for Services
-            // OPTIONAL: If abstract definitions are provided
-            if (isset($definition['abstract']) && !empty($definition['abstract'])) {  
-                $this->container->set($definition['abstract'], $instance);
-            } 
-
-            // Set Key Bindings for Services
-            $this->container->set($key, $instance);   
+            $this->registerToContainer($key, $definition, 'service');
         }
     }
 
-    public function make() 
-    { 
-        return $this->container;
+    protected function registerConsoleServiceBindings() 
+    {
+        $commands = $this->commandCollection(); 
+        foreach ( $commands as $key => $definition ) {
+            $this->registerToContainer($key, [ 'concrete' => $definition ], 'console');
+        }
     }
+
+    private function registerToContainer($key, $definition, $type = 'service') 
+    {
+        // Refreh container instance over container
+        $this->container->set('DI\Container', $this->container);
+        
+        $ref = new ReflectionClass($definition['concrete']);
+        $constructor = $ref->getConstructor();
+        $args = $constructor->getParameters();
+
+        // List filtered arguments from constructor
+        $filtered_args = []; 
+        if (count($args) > 0) { 
+            foreach ($args as $a) {
+                if (empty($a->getType())) {
+                    $filtered_args[] = $a->getDefaultValue();
+                } else {
+                    $name = $a->getType()->getName(); 
+                    if ( $this->container->has($name) ) { 
+                        $filtered_args[] = $this->container->get($name);
+                    } else {
+                        $filtered_args[] = $a->getDefaultValue();
+                    }
+                } 
+            }
+        }
+        
+        // Create instance from given arguments
+        $instance = $ref->newInstanceArgs($filtered_args);
+
+        // Set Namespace Bindings for Services
+        // OPTIONAL: If abstract definitions are provided
+        if (isset($definition['abstract']) && !empty($definition['abstract'])) {  
+            $this->container->set($definition['abstract'], $instance);
+        } 
+
+        // Set Key Bindings for Services
+        $this->container->set($key, $instance);   
+
+        if ($type == 'console') {
+            $this->add($instance);
+        }
+    }
+
 }

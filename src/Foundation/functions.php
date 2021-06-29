@@ -60,3 +60,9 @@ function csrf_token($name = null)
     $name = empty($name) ? 'Smitter' : $name;
     return auth()->csrf()->getToken($name)->__toString();
 }
+
+function path($key) 
+{   
+    $r = 'path.'.$key;
+    return container()->get($r);
+}
