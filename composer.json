@@ -29,7 +29,7 @@
         "symfony/event-dispatcher": "^5.2",
         "symfony/http-foundation": "^5.2",
         "symfony/http-kernel": "^5.2",
-        "symfony/password-hasher": "^5.4.x-dev",
+        "symfony/password-hasher": "^5.3.3",
         "symfony/routing": "^5.2",
         "symfony/security-csrf": "^5.2.10"
     },
